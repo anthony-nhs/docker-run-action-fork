@@ -15,6 +15,9 @@ inputs:
     description: 'Use a specific shell'
     required: false
     default: sh
+  workspace_folder:
+    description: 'Local directory to mount as the workspace folder in the container'
+    required: true
 runs:
   using: 'docker'
   image: 'Dockerfile'

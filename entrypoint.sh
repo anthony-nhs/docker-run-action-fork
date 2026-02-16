@@ -7,7 +7,7 @@ chmod +x /tmp/input_run.sh
 exec docker run 
     -v "/var/run/docker.sock":"/var/run/docker.sock" \
     -v /tmp/input_run.sh:/tmp/input_run.sh \
-    -v ${WORKSPACE_FOLDER}:/work \
+    -v ${INPUT_WORKSPACE_FOLDER}:/work \
     -u 1001:1001 \
     --workdir /work \
     $INPUT_OPTIONS \

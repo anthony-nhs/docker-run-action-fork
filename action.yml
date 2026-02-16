@@ -14,7 +14,7 @@ inputs:
   shell:
     description: 'Use a specific shell'
     required: false
-    default: sh
+    default: bash
   workspace_folder:
     description: 'Host directory to mount as /work; if empty or /github/workspace, auto-detect from current action container mount'
     required: true

@@ -1,8 +1,11 @@
 #!/usr/bin/env bash
 
 echo ${INPUT_RUN} > /tmp/input_run.sh
-chmod +x /tmp/input_run.sh
 
+echo "INPUT_WORKSPACE_FOLDER: ${INPUT_WORKSPACE_FOLDER}"
+echo "INPUT_RUN: ${INPUT_RUN}"
+
+echo "Running command in Docker container..."
 exec docker run \
     -i \
     --rm \

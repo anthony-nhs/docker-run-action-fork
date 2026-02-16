@@ -29,8 +29,7 @@ echo "INPUT_IMAGE: ${INPUT_IMAGE}"
 echo "Command to run: ${INPUT_RUN}"
 
 echo "Running command in Docker container..."
-
-docker run \
+exec docker run \
     --rm \
     -v "/var/run/docker.sock":"/var/run/docker.sock" \
     -v ${WORKSPACE_FOLDER}:/work \
@@ -38,6 +37,4 @@ docker run \
     --workdir /work \
     ${INPUT_OPTIONS} \
     ${INPUT_IMAGE} \
-    ${INPUT_SHELL} -euo pipefail <<EOF
-${INPUT_RUN}
-EOF
+    ${INPUT_SHELL} -c "${INPUT_RUN}"

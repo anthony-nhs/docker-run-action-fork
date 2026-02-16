@@ -16,7 +16,7 @@ inputs:
     required: false
     default: sh
   workspace_folder:
-    description: 'Local directory to mount as the workspace folder in the container'
+    description: 'Host directory to mount as /work; if empty or /github/workspace, auto-detect from current action container mount'
     required: true
 runs:
   using: 'docker'

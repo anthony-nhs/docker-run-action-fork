@@ -23,6 +23,28 @@ resolve_workspace_folder() {
 
 WORKSPACE_FOLDER="$(resolve_workspace_folder)"
 
+DOCKER_ENV_ARGS=()
+if [[ -n "${INPUT_ENV:-}" ]]; then
+  while IFS= read -r env_line || [[ -n "$env_line" ]]; do
+    env_line="${env_line%$'\r'}"
+    [[ -z "$env_line" ]] && continue
+    DOCKER_ENV_ARGS+=(--env "$env_line")
+  done <<< "${INPUT_ENV}"
+fi
+
+DOCKER_OPTION_ARGS=()
+if [[ -n "${INPUT_OPTIONS:-}" ]]; then
+  if [[ "${INPUT_OPTIONS}" == *$'\n'* ]]; then
+    while IFS= read -r option_line || [[ -n "$option_line" ]]; do
+      option_line="${option_line%$'\r'}"
+      [[ -z "$option_line" ]] && continue
+      DOCKER_OPTION_ARGS+=("$option_line")
+    done <<< "${INPUT_OPTIONS}"
+  else
+    read -r -a DOCKER_OPTION_ARGS <<< "${INPUT_OPTIONS}"
+  fi
+fi
+
 echo "INPUT_WORKSPACE_FOLDER: ${INPUT_WORKSPACE_FOLDER:-<unset>}"
 echo "RESOLVED_WORKSPACE_FOLDER: ${WORKSPACE_FOLDER}"
 echo "INPUT_IMAGE: ${INPUT_IMAGE}"
@@ -35,6 +57,7 @@ exec docker run \
     -v ${WORKSPACE_FOLDER}:/work \
     -u 1001:1001 \
     --workdir /work \
-    ${INPUT_OPTIONS} \
+    "${DOCKER_ENV_ARGS[@]}" \
+    "${DOCKER_OPTION_ARGS[@]}" \
     ${INPUT_IMAGE} \
     ${INPUT_SHELL} -c "${INPUT_RUN}"

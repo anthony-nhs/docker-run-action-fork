@@ -18,6 +18,9 @@ inputs:
   workspace_folder:
     description: 'Host directory to mount as /work; if empty or /github/workspace, auto-detect from current action container mount'
     required: true
+  env:
+    description: 'Environment variables to set in the container, in the format VAR=value'
+    required: false
 runs:
   using: 'docker'
   image: 'Dockerfile'

@@ -27,8 +27,24 @@ DOCKER_ENV_ARGS=()
 if [[ -n "${INPUT_ENV:-}" ]]; then
   while IFS= read -r env_line || [[ -n "$env_line" ]]; do
     env_line="${env_line%$'\r'}"
-    [[ -z "$env_line" ]] && continue
-    DOCKER_ENV_ARGS+=(--env "$env_line")
+    [[ -z "${env_line//[[:space:]]/}" ]] && continue
+
+    if [[ "$env_line" == *"="* ]]; then
+      DOCKER_ENV_ARGS+=(--env "$env_line")
+      continue
+    fi
+
+    if [[ "$env_line" == *":"* ]]; then
+      env_key="${env_line%%:*}"
+      env_value="${env_line#*:}"
+
+      env_key="${env_key#"${env_key%%[![:space:]]*}"}"
+      env_key="${env_key%"${env_key##*[![:space:]]}"}"
+      env_value="${env_value#"${env_value%%[![:space:]]*}"}"
+
+      [[ -z "$env_key" ]] && continue
+      DOCKER_ENV_ARGS+=(--env "${env_key}=${env_value}")
+    fi
   done <<< "${INPUT_ENV}"
 fi
 

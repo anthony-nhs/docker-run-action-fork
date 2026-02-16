@@ -30,7 +30,6 @@ echo "Command to run: ${INPUT_RUN}"
 
 echo "Running command in Docker container..."
 exec docker run \
-    -i \
     --rm \
     -v "/var/run/docker.sock":"/var/run/docker.sock" \
     -v ${WORKSPACE_FOLDER}:/work \
@@ -38,4 +37,4 @@ exec docker run \
     --workdir /work \
     ${INPUT_OPTIONS} \
     ${INPUT_IMAGE} \
-    ${INPUT_SHELL} < /tmp/input_run.sh
+    ${INPUT_SHELL} -c "${INPUT_RUN}"

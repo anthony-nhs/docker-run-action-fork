@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 echo ${INPUT_RUN} > /tmp/input_run.sh
+echo "" >> /tmp/input_run.sh
 
 resolve_workspace_folder() {
   local requested="${INPUT_WORKSPACE_FOLDER:-}"
@@ -25,6 +26,7 @@ WORKSPACE_FOLDER="$(resolve_workspace_folder)"
 echo "INPUT_WORKSPACE_FOLDER: ${INPUT_WORKSPACE_FOLDER:-<unset>}"
 echo "RESOLVED_WORKSPACE_FOLDER: ${WORKSPACE_FOLDER}"
 echo "INPUT_IMAGE: ${INPUT_IMAGE}"
+echo "Command to run: ${INPUT_RUN}"
 
 echo "Running command in Docker container..."
 exec docker run \

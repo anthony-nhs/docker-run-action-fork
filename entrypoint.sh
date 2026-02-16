@@ -12,4 +12,4 @@ exec docker run \
     --workdir /work \
     $INPUT_OPTIONS \
     $INPUT_IMAGE \
-    -c /tmp/input_run.sh
+    sh < /tmp/input_run.sh

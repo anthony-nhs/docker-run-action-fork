@@ -75,5 +75,5 @@ exec docker run \
     --workdir /work \
     "${DOCKER_ENV_ARGS[@]}" \
     "${DOCKER_OPTION_ARGS[@]}" \
-    ${INPUT_IMAGE} \
+    ghcr.io/nhsdigital/eps-devcontainers/githubactions-${INPUT_IMAGE} \
     ${INPUT_SHELL} -c "${INPUT_RUN}"
